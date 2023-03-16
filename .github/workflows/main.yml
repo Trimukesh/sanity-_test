@@ -15,4 +15,4 @@ jobs:
       - name: Example step
       
         run: |
-          ./file.ps1
+          ./fileprint.ps1
