@@ -33,4 +33,4 @@ jobs:
       - name: Select server
         
         run: |
-         ./check_report.ps1
+         ./fileprint.ps1
