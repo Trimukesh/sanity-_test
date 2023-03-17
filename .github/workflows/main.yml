@@ -33,4 +33,4 @@ jobs:
       - name: Select server
         
         run: |
-         ./fileprint.ps1
+         pwsh.EXE ./fileprint.ps1
