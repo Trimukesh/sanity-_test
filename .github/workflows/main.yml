@@ -1,36 +1,18 @@
-name: Sanity Check report
+name: On Push Email
 
-on: 
-   workflow_dispatch:
-    inputs:
-     servernames:
-      description: 'select servernames'
-      required: true
-      default: ''
-      options: ['DWSQL1/ODS','DWSQL1/OLTP','QWSQL1/ODS','QWSQL1/OLTP','PTCL1A/ODS','PTCL1B/OLTP','PCL4A/ODS','PCL4B/OLTP']
+on: [push]
 
-     username:
-        description: 'enter username'
-        required: true
-     password:
-          description: 'enter a password'
-          required: true
-     From:
-            description: ''
-            required: true
-            default: ''
-            options: ['Aparna.Sagi@teachforamerica.org','satish.jagarlamudi@teachforamerica.org','dbaprod@teachforamerica.org']
-     To:
-              description: ''
-              required: true
-              default: ''
-              options: ['Aparna.Sagi@teachforamerica.org','satish.jagarlamudi@teachforamerica.org','dbaprod@teachforamerica.org']
 jobs:
-  sanity_check:
-    runs-on: windows-latest
+  send-mail:
+    runs-on: ubuntu-latest
+    name: Send email on every push
     steps:
-      - uses: actions/checkout@v1
-      - name: Select server
-        
-        run: |
-         pwsh.EXE ./fileprint.ps1
+    - name: Send Mail Action
+      id: sendmail
+      uses: vineetchoudhary/mailgun-action@master
+      with:
+        api-key: ${{ secrets.API_KEY }}
+        domain: ${{ secrets.DOMAIN }}
+        to: ${{ secrets.TO }}
+    - name: Send Mail Action Response
+      run: echo "${{ steps.sendmail.outputs.response }}"
